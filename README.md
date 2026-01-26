@@ -232,7 +232,7 @@ Recall that action servers are for robotic actions that take time to complete. W
 
 If you are declaring a new custom message type for this application, you would need to make a new ROS2 package and use colcon to allow the Python interpreter and ROS2 to see your new message type. However, this is not necessary if you are using a known message type such as a string.
 
-[Reading: making custom messages] [https://docs.ros.org/en/foxy/Tutorials/Beginner-Client-Libraries/Custom-ROS2-Interfaces.html](https://docs.ros.org/en/foxy/Tutorials/Beginner-Client-Libraries/Custom-ROS2-Interfaces.html)
+[Reading: making custom messages] [https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Custom-ROS2-Interfaces.html](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Custom-ROS2-Interfaces.html)
 
 You also need a corresponding ROS2 client  that tests the above functionalities of your producer code. The requirements are similar to assignment 4, in that we expect raw, unprocessed output similar to the output of ROS2 CLI tools.
 
