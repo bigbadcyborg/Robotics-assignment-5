@@ -61,8 +61,20 @@ Rules for robot usage will apply for working with the physical Turtlebot3. Pleas
 
 ---
 
+### Part 0: Downloading the Demo Files
+
+
 ### Part 1: Running Whisper Voice Transcription Software and Espeak Text to Speech
 
+**[Remote-PC]** While connected to the internet, git clone and download the demo in my_code folder of the Docker's shared folder. 
+
+```bash
+cd ~/turtlebot_docker/my_code
+git clone https://github.com/dmz44/Robotics_Assignment_5.git
+cd ~/turtlebot_docker/my_code/Robotics_Assignment_5/Assignment_5_demo
+wget -c https://huggingface.co/TheBloke/Llama-2-7B-32K-Instruct-GGUF/resolve/main/llama-2-7b-32k-instruct.Q4_K_M.gguf
+wget -c https://huggingface.co/TheBloke/Llama-2-7b-Chat-GGUF/resolve/main/llama-2-7b-chat.Q4_K_M.gguf
+```
 
 #### Running Whisper and Espeak
 
@@ -73,34 +85,23 @@ To quote the eSpeak developers, eSpeak is a compact open source software speech 
 To quote OpenAI, Whisper is a general-purpose speech recognition model. It is trained on a large dataset of diverse audio and is also a multitasking model that can perform multilingual speech recognition, speech translation, and language identification.
 
 The following instructions are from our own and not from online sources. Please follow carefully and ask the TA for assistance should you face any problems.
+``
 
-**[Turtlebot Nvidia Jeston]** Plug in Airhug to the USB port on Jetson. Change the default sound output device and the default input microphone to Airhug by going to the Jetson’s settings. Verify this setting by using the Test button in settings.
-
-**[Turtlebot Nvidia Jeston]** While connected to the internet, git clone and download the demo in my_code folder of the Docker's shared folder. 
-
-```bash
-cd ~/turtlebot_docker/my_code
-git clone https://github.com/dmz44/Robotics_Assignment_5.git
-cd ~/turtlebot_docker/my_code/Robotics_Assignment_5/Assignment_5_demo
-wget -c https://huggingface.co/TheBloke/Llama-2-7B-32K-Instruct-GGUF/resolve/main/llama-2-7b-32k-instruct.Q4_K_M.gguf
-wget -c https://huggingface.co/TheBloke/Llama-2-7b-Chat-GGUF/resolve/main/llama-2-7b-chat.Q4_K_M.gguf
-```
-
-**[Turtlebot Nvidia Jeston]** Go to the folder in a new terminal window
+**[Remote-PC]** Go to the folder in a new terminal window
 
 ```bash
 cd ~/turtlebot_docker/my_code/Robotics_Assignment_5/Assignment_5_demo
 
 ```
 
-**[Turtlebot Nvidia Jeston]** Run the demo code that incorporates Espeak with `_tts_worker` function and whisper with `transcribe_whisper`. You would be able to speak for 5 seconds, and whatever gets transcribed would be echoed(spoken) by Espeak. Note that Whisper is capable of transcribing non-English sentences, unless specified in step 5.
+**[Remote-PC]** Run the demo code that incorporates Espeak with `_tts_worker` function and whisper with `transcribe_whisper`. You would be able to speak for 5 seconds, and whatever gets transcribed would be echoed(spoken) by Espeak. Note that Whisper is capable of transcribing non-English sentences, unless specified in step 5.
 
 ```bash
 python3 test_whisper.py
 
 ```
 
-**[Optional] [Turtlebot Nvidia Jeston]** Run the demo code for different-sized models. You can modify the following line to change the model and device.
+**[Optional] [Remote-PC]** Run the demo code for different-sized models. You can modify the following line to change the model and device.
 
 ```python
 whisper_model = whisper.load_model("small", device=device)
@@ -153,14 +154,14 @@ The description of the prompt engineering process is left as recommended reading
 
 #### Running LLaMa
 
-**[Turtlebot Nvidia Jeston]** Go to the folder with the demo code.
+**[Remote-PC]** Go to the folder with the demo code.
 
 ```bash
 cd ~/turtlebot_docker/my_code/Robotics_Assignment_5/Assignment_5_demo
 
 ```
 
-**[Turtlebot Nvidia Jeston]** Try running llama-2-7b-32k-insturct via Q4 quantization. 
+**[Remote-PC]** Try running llama-2-7b-32k-insturct via Q4 quantization. 
 
 ```python
 MODEL_PATH = os.path.expanduser(“llama-2-7b-32k-insturct.Q4_K_M.gguf”)
@@ -172,7 +173,7 @@ python3 test_llama_text.py
 
 ```
 
-**[Turtlebot Nvidia Jeston]** Modify the demo code so that you can chat with a llama via text, but with llama2-7b-chat. Note that we are going to reference models already in the SD card to save time.
+**[Remote-PC]** Modify the demo code so that you can chat with a llama via text, but with llama2-7b-chat. Note that we are going to reference models already in the SD card to save time.
 
 ```python
 MODEL_PATH = os.path.expanduser(“llama-2-7b-chat.Q4_K_M.gguf”)
@@ -184,14 +185,14 @@ python3 test_llama_text.py
 
 ```
 
-**[Turtlebot Nvidia Jeston]** Run the demo code that allows you to speak to a LlaMa via voice using whisper and espeak. This code will use llama-2-7b-chat via Q4 quantization. Please take a look at the performance optimizations that are needed on Jetson NX to run llama and whisper at the same time.
+**[Remote-PC]** Run the demo code that allows you to speak to a LlaMa via voice using whisper and espeak. This code will use llama-2-7b-chat via Q4 quantization. Please take a look at the performance optimizations that are needed on Jetson NX to run llama and whisper at the same time.
 
 ```bash
 python3 test_llama_whisper_and_speach.py
 
 ```
 
-**[Optional][Turtlebot Nvidia Jeston]** Try following tasks and try different prompting techniques on two different models, chat and instruct. The following are examples of the tasks that you can copy and paste into the LLM to get started.
+**[Optional][Remote-PC]** Try following tasks and try different prompting techniques on two different models, chat and instruct. The following are examples of the tasks that you can copy and paste into the LLM to get started.
 
 * **Follow-up Question**
 * Prompt 1: "Can you explain the difference between forward and inverse kinematics for a robotic arm?"
@@ -212,9 +213,9 @@ python3 test_llama_whisper_and_speach.py
 
 
 
-**[Optional][Turtlebot Nvidia Jeston]** Refer to the references to tune parameters involved in the LLM inference loop and test part 4 with different parameters.
+**[Optional][Remote-PC]** Refer to the references to tune parameters involved in the LLM inference loop and test part 4 with different parameters.
 
-**[Optional][Turtlebot Nvidia Jeston]** You can add the ability to have a system prompt or a pre-prompt by modifying the text inference loop. The example is provided as part of the demo file zip. Try adding appropriate system prompts designed by you to the tasks outlined in the 4th step.
+**[Optional][Remote-PC]** You can add the ability to have a system prompt or a pre-prompt by modifying the text inference loop. The example is provided as part of the demo file zip. Try adding appropriate system prompts designed by you to the tasks outlined in the 4th step.
 
 ```bash
 python3 test_llama_text_system.py
@@ -227,21 +228,17 @@ python3 test_llama_text_system.py
 
 For part 3, you need to code a ROS2 communication script on Jetson interfaces with Espeak, Whisper, and LLaMa. You can choose if you want to use either the action server interface, publisher-subscriber interface, or the service client interface for each of the three requirements.
 
-Note that the secondary Jeston should process everything, including Espeak, Whisper, and LlaMa, and report results to the RemotePC. This would mean that the flow of information would be Text-> RemotePC-> ROS2 -> Jetson -> Voice for Espeak, Voice-> Microphone-> Jetson -> Text-> ROS2 -> RemotePC for Whisper,  and Text-> RemotePC -> ROS2 ->Jetson->Text->ROS2 ->RemotePC for LLaMa.
-
-**[ Added in v1.0 ]** When attempting to run both Whisper and LlaMa at the same time, please look at the test script `test_llama_whisper_and_speach.py` and set appropriate performance settings in your code. For example, if you attempt to run both whisper and LlaMa on device ‘CUDA’ at the same time, the Jetson GPU will run out of VRAM and crash. This is because the CPU can use swap memory, while the Jetson GPU cannot.
-
 Recall that action servers are for robotic actions that take time to complete. We think that LLM responses, Espeak text-to-speech, and Whisper voice transcriptions should all be done with action servers and action clients, similar to controlling a robot arm. However, it is up to you how you manage the ROS2 integration.
 
 If you are declaring a new custom message type for this application, you would need to make a new ROS2 package and use colcon to allow the Python interpreter and ROS2 to see your new message type. However, this is not necessary if you are using a known message type such as a string.
 
 [Reading: making custom messages] [https://docs.ros.org/en/foxy/Tutorials/Beginner-Client-Libraries/Custom-ROS2-Interfaces.html](https://docs.ros.org/en/foxy/Tutorials/Beginner-Client-Libraries/Custom-ROS2-Interfaces.html)
 
-You also need a corresponding ROS2 client on the Remote PC that tests the above functionalities of your producer code. The requirements are similar to assignment 4, in that we expect raw, unprocessed output similar to the output of ROS2 CLI tools.
+You also need a corresponding ROS2 client  that tests the above functionalities of your producer code. The requirements are similar to assignment 4, in that we expect raw, unprocessed output similar to the output of ROS2 CLI tools.
 
 Refer to the Assignment 3 Appendix for the programming guide with ROS2.
 
-Make sure both machines have synced time and are on the same local network if you are using multiple computers.
+Make sure all machines have synced time and are on the same local network if you are using multiple computers.
 
 ---
 
@@ -272,14 +269,9 @@ The goal of this part is to explain the ROS2 architecture you built. With your s
 * Briefly explain the client you wrote to send prompts to the LLaMa server.
 * Explain to the client to send a text to the Espeak server.
 * Explain to the client that you used to receive transcribed text from Whisper.
-
-
-* **Jetson Nodes:**
-* Show your script(s) for the Jetson.
 * Explain the Whisper server that captures audio and publishes the transcribed text. Mention the model you chose for this task with brief reasoning behind your decision.
 * Explain the LLaMa server, showing how it receives a prompt, processes it, and returns the generated text as a result. Mention the model you chose for this task with brief reasoning behind your decision.
 * Explain the Espeak server, showing how it receives text as a goal and uses the TTS engine to produce audio.
-
 
 
 #### Part C: Live System Demonstration
