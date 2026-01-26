@@ -8,7 +8,7 @@
 
 Welcome to CS 7389K. We have prepared a few milestones before the final project, in which you will use a physical robot to execute a mission given by us. The following milestones will give you an idea of how to interact with ROBOTIS’ Turtlebot3 Waffle Pi with a Manipulator Arm using the Robot Operating System 2.
 
-In this fifth milestone, you will learn how to use a voice recognition neural network, Whisper, and Text to Speech system, Espeak, and run LlaMa Large Language Model by Meta on Nvidia Jetson Xavier NX.
+In this fifth milestone, you will learn how to use a voice recognition neural network, Whisper, and Text to Speech system, Espeak, and run LlaMa Large Language Model by Meta on Remote-PC.
 
 To do this, you will deploy our pre-configured Docker container that sets up all the software that is required for the assignment.
 Please refer to the following video for an explanation of what a Docker container environment is. 
@@ -76,20 +76,20 @@ The following instructions are from our own and not from online sources. Please 
 
 **[Turtlebot Nvidia Jeston]** Plug in Airhug to the USB port on Jetson. Change the default sound output device and the default input microphone to Airhug by going to the Jetson’s settings. Verify this setting by using the Test button in settings.
 
-**[Turtlebot Nvidia Jeston]** While connected to the internet, install gdown and download the demo files and unzip them in the home directory. Alternatively, download it using the web browser.
+**[Turtlebot Nvidia Jeston]** While connected to the internet, git clone and download the demo in my_code folder of the Docker's shared folder. 
 
 ```bash
-cd ~/
-pip install gdown
-gdown ‘https://drive.google.com/file/d/1KTqPAscFbgC71XtrxPGOTgp-7jFukzqj/view?usp=sharing’
-unzip CS7389K_Robotics_Demo.zip
-
+cd ~/turtlebot_docker/my_code
+git clone https://github.com/dmz44/Robotics_Assignment_5.git
+cd ~/turtlebot_docker/my_code/Robotics_Assignment_5/Assignment_5_demo
+wget -c https://huggingface.co/TheBloke/Llama-2-7B-32K-Instruct-GGUF/resolve/main/llama-2-7b-32k-instruct.Q4_K_M.gguf
+wget -c https://huggingface.co/TheBloke/Llama-2-7b-Chat-GGUF/resolve/main/llama-2-7b-chat.Q4_K_M.gguf
 ```
 
 **[Turtlebot Nvidia Jeston]** Go to the folder in a new terminal window
 
 ```bash
-cd ~/CS7389K_Robotics_Demo/assignment5/CUDA_Demo
+cd ~/turtlebot_docker/my_code/Robotics_Assignment_5/Assignment_5_demo
 
 ```
 
@@ -156,14 +156,14 @@ The description of the prompt engineering process is left as recommended reading
 **[Turtlebot Nvidia Jeston]** Go to the folder with the demo code.
 
 ```bash
-cd ~/CS7389K_Robotics_Demo/assignment5/CUDA_Demo
+cd ~/turtlebot_docker/my_code/Robotics_Assignment_5/Assignment_5_demo
 
 ```
 
-**[Turtlebot Nvidia Jeston]** Try running llama-2-7b-32k-insturct via Q4 quantization. Note that we are going to reference models already in the SD card to save time.
+**[Turtlebot Nvidia Jeston]** Try running llama-2-7b-32k-insturct via Q4 quantization. 
 
 ```python
-MODEL_PATH = os.path.expanduser(“~/llama.cpp/models/llama-2-7b-32k-insturct.Q4_K_M.gguf”)
+MODEL_PATH = os.path.expanduser(“llama-2-7b-32k-insturct.Q4_K_M.gguf”)
 
 ```
 
@@ -175,7 +175,7 @@ python3 test_llama_text.py
 **[Turtlebot Nvidia Jeston]** Modify the demo code so that you can chat with a llama via text, but with llama2-7b-chat. Note that we are going to reference models already in the SD card to save time.
 
 ```python
-MODEL_PATH = os.path.expanduser(“~/llama.cpp/models/llama-2-7b-chat.Q4_K_M.gguf”)
+MODEL_PATH = os.path.expanduser(“llama-2-7b-chat.Q4_K_M.gguf”)
 
 ```
 
