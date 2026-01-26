@@ -63,8 +63,7 @@ Rules for robot usage will apply for working with the physical Turtlebot3. Pleas
 
 ### Part 0: Downloading the Demo Files
 
-
-### Part 1: Running Whisper Voice Transcription Software and Espeak Text to Speech
+Execute this instruction on the native shell of the remote-pc. 
 
 **[Remote-PC]** While connected to the internet, git clone and download the demo in my_code folder of the Docker's shared folder. 
 
@@ -76,6 +75,8 @@ wget -c https://huggingface.co/TheBloke/Llama-2-7B-32K-Instruct-GGUF/resolve/mai
 wget -c https://huggingface.co/TheBloke/Llama-2-7b-Chat-GGUF/resolve/main/llama-2-7b-chat.Q4_K_M.gguf
 ```
 
+### Part 1: Running Whisper Voice Transcription Software and Espeak Text to Speech
+
 #### Running Whisper and Espeak
 
 Part 1 will show you how to run Whisper and Espeak.
@@ -83,6 +84,8 @@ Part 1 will show you how to run Whisper and Espeak.
 To quote the eSpeak developers, eSpeak is a compact open source software speech synthesizer for English and other languages, for Linux and Windows.
 
 To quote OpenAI, Whisper is a general-purpose speech recognition model. It is trained on a large dataset of diverse audio and is also a multitasking model that can perform multilingual speech recognition, speech translation, and language identification.
+
+This assumes that you have a working setup from Milestone Assignment 1 Part 1. Please execute all instructions with **[Remote PC]** on Docker shell. Note that you have to enable GUI and start the Docker container by following instruction from Milestone Assignment 1. Please execute all instructions with **[Turtlebot Nvidia Jetson]** on Turtlebot Jetson's native bash shell without Docker.
 
 The following instructions are from our own and not from online sources. Please follow carefully and ask the TA for assistance should you face any problems.
 ``
