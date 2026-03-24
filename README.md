@@ -191,7 +191,7 @@ python3 test_llama_whisper_and_speach.py
 
 ```
 
-**[Optional][Remote-PC]** Try following tasks and try different prompting techniques on two different models, chat and instruct. The following are examples of the tasks that you can copy and paste into the LLM to get started.
+**[Remote-PC]** Try following tasks and try different prompting techniques on two different models, chat and instruct. The following are examples of the tasks that you can copy and paste into the LLM to get started.
 
 * **Follow-up Question**
 * Prompt 1: "Can you explain the difference between forward and inverse kinematics for a robotic arm?"
