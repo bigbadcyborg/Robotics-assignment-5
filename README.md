@@ -210,16 +210,14 @@ python3 test_llama_whisper_and_speach.py
 * **Code Generation**
 * Prompt 1: I'm building a service robot. Can you help me write a Python function for human interaction?
 
-
-
-**[Optional][Remote-PC]** Refer to the references to tune parameters involved in the LLM inference loop and test part 4 with different parameters.
-
-**[Optional][Remote-PC]** You can add the ability to have a system prompt or a pre-prompt by modifying the text inference loop. The example is provided as part of the demo file zip. Try adding appropriate system prompts designed by you to the tasks outlined in the 4th step.
+**[Remote-PC]** You can add the ability to have a system prompt or a pre-prompt by modifying the text inference loop. The example is provided as part of the demo file zip. Try adding appropriate system prompts designed by you to the tasks outlined in the 4th step.
 
 ```bash
 python3 test_llama_text_system.py
 
 ```
+
+**[Optional][Remote-PC]** Refer to the references to tune parameters involved in the LLM inference loop and test part 4 with different parameters.
 
 ---
 
