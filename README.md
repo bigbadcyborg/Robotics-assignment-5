@@ -121,15 +121,17 @@ whisper_model = WhisperModel("small", device = "cuda", compute_type = "float16")
 
 ```
 
-The available models are listed in order from smallest to largest: tiny, base, small, medium, and large. Note that all models, except large, have English-only versions.
+The available models are listed in order from smallest to largest: tiny, base, small, medium, and large v1/v2/v3. Note that all models, except large, have English-only versions.
+
+Note that Remote-PC has 8GB of dedicated VRAM.
 
 | Model | Param count | Vram Usage |
 | --- | --- | --- |
-| tiny / tiny.en | 39 M | ~1 GB |
-| base / base.en | 74 M | ~1 GB |
-| small / small.en | 244 M | ~2 GB |
-| medium / medium.en | 769 M | ~5 GB |
-| large | 1550 M | ~10 GB |
+| tiny / tiny.en | 39 M | ~0.15 GB |
+| base / base.en | 74 M | ~0.2 GB |
+| small / small.en | 244 M | ~0.6 GB |
+| medium / medium.en | 769 M | ~1.5 GB |
+| large (v1/v2/v3) | 1550 M | ~3.1 GB |
 
 
 ---
@@ -165,6 +167,19 @@ What would happen if you did not structure your prompt? Let's say you ask the LL
 The description of the prompt engineering process is left as recommended reading in the appendix.
 
 #### Running LLaMa
+
+Here is a table of LLaMa LLM features.
+
+| Feature | `llama-2-7b-32k-instruct.Q4_K_M.gguf` | `llama-2-7b-chat.Q4_K_M.gguf` |
+| :--- | :--- | :--- |
+| **Base Architecture** | LLaMA-2 | LLaMA-2 |
+| **Parameter Count** | 7 Billion | 7 Billion |
+| **Context Window (Max Tokens)**| **32,768 (32k)** | **4,096 (4k)** |
+| **Fine-Tuning Type** | **Instruct** (Follows direct commands/tasks) | **Chat** (Conversational, RLHF tuned) |
+| **Quantization Method** | Q4_K_M (4-bit) | Q4_K_M (4-bit) |
+| **File Size (Approx.)** | ~4.1 GB | ~4.1 GB |
+| **VRAM Required** | ~4.5 GB + **high memory for KV cache** | ~4.5 GB + low memory for KV cache |
+
 
 **[Remote-PC]** Go to the folder with the demo code.
 
