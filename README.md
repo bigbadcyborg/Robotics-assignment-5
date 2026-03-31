@@ -114,10 +114,10 @@ python3 test_whisper.py
 
 ```
 
-**[Optional] [Remote-PC]** Run the demo code for different-sized models. You can modify the following line to change the model and device.
+**[Optional] [Remote-PC]** Run the demo code for different-sized models. You can modify the following line to change the model.
 
 ```python
-whisper_model = whisper.load_model("small", device=device)
+whisper_model = WhisperModel("small", device = "cuda", compute_type = "float16")
 
 ```
 
