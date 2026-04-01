@@ -53,7 +53,7 @@ Rules for robot usage will apply for working with the physical Turtlebot3. Pleas
 
 ### Major Changes
 
-* **v 1.05:** Major overhaul involving a lot of requested changes
+* **v 1.05:** Major overhaul involving a lot of requested changes.
 * **v 1.0:** Initial Public Release
 
 ---
@@ -209,7 +209,7 @@ The prompts need to do the following:
 
 What would happen if you did not structure your prompt? Let's say you ask the LLM agent how to satisfy your thirst using a turtlebot with a manipulator arm. You ask the agent directly as follows: “ I am thirsty, help me “. The LLM does not know what kind of resources it has, so it will do a conversational or nonsensical output, such as “Of course, staying hydrated is very important”. Ideally, you want a physically possible, logical action sequence as a plan that caters to your robot agent and the environment, kind of like how you compile source code into a machine executable.
 
-The description of the prompt engineering process is left as recommended reading in the appendix.
+The more detailed description of the prompt engineering process is left as recommended reading in the appendix.
 
 #### Running LLaMa
 
@@ -277,23 +277,31 @@ python3 test_llama_text_system.py
 
 ```
 
-**[Remote-PC]** Try following tasks and try different prompting techniques on two different models, chat and instruct. The following are examples of the tasks that you can copy and paste into the LLM to get started.
+**[Remote-PC]** Try following tasks and try different prompting techniques on two different models, chat and instruct. 
+
+You are expected to use system prompts (Description of roles and duties e.g., you are a math teacher) as well as prompting techniques during your trials.
+
+Here is a summary of the prompting techniques useful for these tasks. For a more detailed description, please consult the appendix. 
+
+* **Zero-Shot Prompting:** Giving the AI a task without providing any prior examples or demonstrations. The model relies entirely on its pre-trained knowledge to understand and execute the instruction.
+* **Few-Shot Prompting:** Providing a few examples (input-output pairs) within the prompt to guide the AI. This demonstrates the specific pattern, style, or strict format you want the model to follow before giving it the actual task. 
+* **Chain-of-Thought (CoT) Prompting:** Instructing the AI to break down its reasoning step-by-step (often by simply adding a phrase like *"Let's think step by step"*). This significantly improves the model's accuracy on complex math, logic, and reasoning tasks by forcing it to map out its logic before arriving at the final answer.
+
+**Tasks**
 
 * **Follow-up Question**
 * Prompt 1: "Can you explain the difference between forward and inverse kinematics for a robotic arm?"
 * (After it answers...)
 * Prompt 2: "Which one is generally considered more computationally difficult to solve and why?"
 
-
 * **Open-Ended Question**
 * Prompt 1: How does a SLAM work in a robot?
-
 
 * **Strict Formatting**
 * Prompt 1: Provide the main components of a ROS 2 system as a bulleted list. Do not add any introductory or concluding sentences. List exactly four components.
 
 
-**[Remote-PC]** Try running the demo code that allows you to speak to a LlaMa via voice using whisper and espeak. Close the previous program with ctrl+c and try running this demo code on the docker shell.
+**[Remote-PC]** Try running the demo code that allows you to have voice conversation with a LlaMa LLM via voice using whisper and espeak. Close the previous program with ctrl+c and try running this demo code on the Docker shell.
 
 ```bash
 python3 test_llama_whisper_and_speach.py
@@ -306,9 +314,11 @@ python3 test_llama_whisper_and_speach.py
 
 ### Part 4: ROS2 Servers and Clients to Integrate Espeak, Whisper, and LlaMa
 
-For part 4, we will provide you with the complete ROS2 script on interfaces with Espeak, Whisper, and LLaMa. 
+For part 4, we will provide you with the complete ROS2 server script and ROS2 client example script on interfaces with Espeak, Whisper, and LLaMa. 
 
 Please take a look at the provided code for ROS2 Servers and clients, and choose what models you want to use for Whisper and LLaMa by modifying the provided code. 
+
+You need to complete option 4, which takes in your voice as input after a few seconds of recording(e.g. 5 seconds) and reads the LLM response to you using espeak.
 
 The following is an instruction to execute the provided code. 
 
@@ -331,6 +341,7 @@ python3 sample_code_clients.py
 
 **[Remote-PC]** While the codes run as is, you are still expected to modify the parameters within the code if necessary to complete the demo requirements.
 
+**[Remote-PC]** Complete code for client option 4 that integrates three interfaces discussed in the client code.
 
 ---
 
@@ -346,41 +357,46 @@ The goal of this part is to demonstrate that you have tested the two provided LL
 
 * **LLM Insights and Logical Test:**
 * **Model Comparison:** In your narration, briefly explain the conceptual difference between chat and instruct LLM models. Then, show a quick example of how their responses differ to the same input, proving you have tested both.
-* **System Prompt Comparison:** In your narration, briefly explain effects of having a system prompt and not having a system prompt.
-* **Logical Puzzle:** Discuss the result of using a text-only demo script to send the specific "thirsty" bottle problem to your LLaMa action server using appropriate prompt engineering to formulate the problem in natural language. Choose an appropriate model for this task. You may assume or define all other necessary parameters about the environment and robot for prompt engineering to ask LLM to solve this puzzle.
-* **Thirsty bottle problem:** The user is thirsty. On a table in front of you are four objects: a hat, a computer mouse, a toaster, and a water bottle full of water. How can Turtlebot3 with a manipulator arm help the user?
-* **Prompt Engineering:** After the puzzle, verbally explain the specific LLaMa model you used and the prompt engineering techniques you applied to ensure the model solved the puzzle correctly and returned answers that can be parsed easily into concrete action sequences that can be taken by the robot.
-
+* **System Prompt Comparison:** In your narration, briefly explain the effects of having a system prompt and not having a system prompt.
+* **Task Execution:** Discuss the result of various tests you did with prompts in Part 3 of the assignment.
 
 
 #### Part B: Code Walkthrough
 
 The goal of this part is to explain the ROS2 architecture we provided. With your source code visible, guide us through the key components of the scripts.
 
-* **Remote PC Nodes:**
-
+**Remote PC Server:**
 * Explain the Whisper publisher server that captures audio and publishes the transcribed text. Mention the model you chose for this task with brief reasoning behind your decision.
-* Explain the LLaMa publisher server, showing how it receives a prompt, processes it, and returns the generated text as a result. Mention the model you chose for this task with brief reasoning behind your decision.
+* Explain the LLaMa publisher server, showing how it receives a prompt, processes it, and returns the generated text as a result. Mention the model you chose for this task with brief reasoning behind your decision, and model and inference parameters that support it. For a description of the parameters, please consult the appendix.
 * Explain the Espeak publisher server, showing how it receives text as a request and uses the TTS engine to produce audio.
+
+**Remote PC Client:**
+* Explain the client architecture on how it interfaces with the publisher servers mentioned above.
+* Explain how you integrated the three to have a conversation with LLM with 
 
 
 #### Part C: Live System Demonstration
 
-In this part, you will run our full system to demonstrate each AI model and the ROS2 communication between them. 
+In this part, you will run our full system to demonstrate each AI model and the ROS2 communication between them and modify the client to demonstrate you understand how to use the provided ROS2 server for Natural Language Pipeline.
 
-* **Whisper (Speech-to-Text):**
+**Whisper (Speech-to-Text):**
 * Speak a clear English sentence into the microphone (e.g., "Hello, what can you tell me about robotics?").
 * Show the terminal on your Remote-PC where your publisher and subscriber nodes handling your request.
 
-* **LLaMa (Language Model Response):**
-
+**LLaMa (Language Model Response):**
 * Show the LLaMa model processing the request on the screen.
 * Show the text response from LLaMa being received and displayed on the Remote PC.
 
-* **espeak (Text-to-Speech):**
+**espeak (Text-to-Speech):**
 * Take the text response generated by LLaMa and use your Remote PC client to send it as a goal to the Espeak publisher server.
 
+* **Full Integration (Option 4)**
+You can refer to the demo code **test_llama_whisper_and_speach.py** for the expected behavior when three are fully integrated.
+The following steps should require no keyboard input from the user.
 
+* Show that your voice is transcribed into text and given as input to the LLaMa.
+* Show the text response from LLaMa being received and displayed on the Remote PC.
+* Show that the text response from LLaMa is read by espeak.
 
 ---
 
