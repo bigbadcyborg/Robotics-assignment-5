@@ -213,7 +213,7 @@ The more detailed description of the prompt engineering process is left as recom
 
 #### Running LLaMa
 
-Here is a table of LLaMa LLM features.
+Here is a table of LLaMa LLM features. For more details of each model, please consult the appendix.
 
 | Feature | `llama-2-7b-32k-instruct.Q4_K_M.gguf` | `llama-2-7b-chat.Q4_K_M.gguf` |
 | :--- | :--- | :--- |
