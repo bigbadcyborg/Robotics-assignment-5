@@ -94,6 +94,7 @@ The following instructions are from our own and not from online sources. Please 
 top
 ```
 
+**Example output of top: Monitor %CPU and %MEM so that you do not run out of system resources**
 ```
 top - 20:23:44 up  8:52,  0 users,  load average: 1.73, 1.83, 1.79
 Tasks:   5 total,   1 running,   4 sleeping,   0 stopped,   0 zombie
@@ -114,6 +115,7 @@ MiB Swap:   4096.0 total,   4095.6 free,      0.4 used.  10573.3 avail Mem
 nvidia-smi
 ```
 
+**Example output of nvidia-smi: Monitor GPU-Util and GPU Memory Usage(VRAM Usage) so that you do not run out of system resources**
 ```
 root@minhyuk-Nitro-ANV16-42:~/my_code/Robotics_Assignment_5# nvidia-smi
 Tue Mar 31 20:24:26 2026       
