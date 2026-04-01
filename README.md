@@ -301,14 +301,14 @@ Here is a summary of the prompting techniques useful for these tasks. For a more
 * Prompt 1: Provide the main components of a ROS 2 system as a bulleted list. Do not add any introductory or concluding sentences. List exactly four components.
 
 
-**[Remote-PC]** Try running the demo code that allows you to have voice conversation with a LlaMa LLM via voice using whisper and espeak. Close the previous program with ctrl+c and try running this demo code on the Docker shell.
+**[Remote-PC]** Try running the demo code that allows you to have a voice conversation with a LlaMa LLM via voice using whisper and espeak. Close the previous program with ctrl+c and try running this demo code on the Docker shell. This is what is expected of you in Part 4 of the assignment.
 
 ```bash
 python3 test_llama_whisper_and_speach.py
 
 ```
 
-**[Optional][Remote-PC]** Refer to the references to tune parameters involved in the LLM inference loop and test part 4 with different parameters.
+**[Remote-PC]** Refer to the appendix to tune parameters involved in the LLM inference loop and test part 4 with different parameters.
 
 ---
 
@@ -318,7 +318,7 @@ For part 4, we will provide you with the complete ROS2 server script and ROS2 cl
 
 Please take a look at the provided code for ROS2 Servers and clients, and choose what models you want to use for Whisper and LLaMa by modifying the provided code. 
 
-You need to complete option 4, which takes in your voice as input after a few seconds of recording(e.g. 5 seconds) and reads the LLM response to you using espeak.
+You need to complete option 4 in the sample_client script. It is expected that the script will take in your voice as input after a few seconds of recording(e.g. 5 seconds) and read the LLM response to you using espeak.
 
 The following is an instruction to execute the provided code. 
 
@@ -372,7 +372,7 @@ The goal of this part is to explain the ROS2 architecture we provided. With your
 
 **Remote PC Client:**
 * Explain the client architecture on how it interfaces with the publisher servers mentioned above.
-* Explain how you integrated the three to have a conversation with LLM with 
+* Explain how you integrated the three to have a conversation with LLM to implement option 4. 
 
 
 #### Part C: Live System Demonstration
