@@ -64,6 +64,8 @@ Execute this instruction on the native shell of the remote-pc.
 
 **[Native Bash Shell Remote-PC]** While connected to the internet, git clone and download the demo in my_code folder of the Docker's shared folder. 
 
+Be prepared to wait for a while to download the LLM model.
+
 ```bash
 cd ~/turtlebot_docker/my_code
 git clone https://github.com/dmz44/Robotics_Assignment_5.git
@@ -148,7 +150,9 @@ cd ~/my_code/Robotics_Assignment_5/Assignment_5_demo
 
 ```
 
-**[Remote-PC]** Run the demo code within the Dockershell that incorporates Espeak  and whisper. You would be able to speak for 5 seconds, and whatever gets transcribed would be echoed(spoken) by Espeak. Note that Whisper is capable of transcribing non-English sentences, unless specified as English-only in the next step.
+**[Remote-PC]** Run the demo code within the Dockershell that incorporates Espeak  and whisper. You would be able to speak for 5 seconds, and whatever gets transcribed would be echoed(spoken) by Espeak. Note that Whisper is capable of transcribing non-English sentences, unless specified as English-only in the next step. 
+
+Be prepared to wait for a while to download the whisper model during your first run.
 
 ```bash
 python3 test_whisper.py
@@ -177,7 +181,7 @@ Note that Remote-PC has 8GB of dedicated VRAM. It is your responsibility to keep
 
 ---
 
-### Part 3: Running LLaMa Large Language Model on Jetson
+### Part 3: Running LLaMa Large Language Model on Remote-PC
 
 Part 3 will show you how to run LLaMa, a Large Language Model from Meta.
 
@@ -242,6 +246,8 @@ cd ~/my_code/Robotics_Assignment_5/Assignment_5_demo
 ```
 
 **[Remote-PC]** Try running llama-2-7b-32k-insturct via Q4 quantization on a new Docker shell. 
+
+Be prepared to wait for a while to load the LLM model into VRAM during the first run.
 
 ```python
 MODEL_PATH = os.path.expanduser(“~/my_code/Robotics_Assignment_5/Assignment_5_demo/llama-2-7b-32k-insturct.Q4_K_M.gguf”)
@@ -367,7 +373,7 @@ The goal of this part is to explain the ROS2 architecture we provided. With your
 In this part, you will run our full system to demonstrate each AI model and the ROS2 communication between them. 
 
 * **Whisper (Speech-to-Text):**
-* Speak a clear English sentence into the microphone connected to the Jetson (e.g., "Hello, what can you tell me about robotics?").
+* Speak a clear English sentence into the microphone (e.g., "Hello, what can you tell me about robotics?").
 * Show the terminal on your Remote-PC where your publisher and subscriber nodes handling your request.
 
 * **LLaMa (Language Model Response):**
@@ -401,7 +407,7 @@ Reference: [https://github.com/openai/whisper](https://github.com/openai/whisper
 
 You can reasonably run the Whisper voice-to-text model on your own desktop machine with any architecture, meaning CPU-only performance for Whisper is reasonable. This guide is intended to allow your machine equipped with an Nvidia GPU to run Whisper, which might help you with offloading some of the development for this assignment to your own machine. However, while this instruction was tested on our machines, we would not offer official support for you running Whisper on your own machine.
 
-**[Your PC]** It is not recommended to install Whisper or LLama in a Python virtual environment, such as Conda, if you want it to work well with ROS2 or other binary programs installed through apt-get. This is the primary reason why we did not install a Python virtual environment on Jetson.
+**[Your PC]** It is not recommended to install Whisper or LLama in a Python virtual environment, such as Conda, if you want it to work well with ROS2 or other binary programs installed through apt-get.
 
 You can deactivate your Python virtual environment temporarily and install the necessary packages if you need your virtual environment.
 
@@ -592,22 +598,23 @@ We would leave you with a couple of free prompt optimizer tools that optimize pr
 
 #### [Optional Reading] Running Large Language Models on Edge Systems
 
-Edge systems such as laptops and Nvidia Jetsons have limited resources compared to full-fledged servers with a large power budget. As such, optimizations are necessary to run demanding AI models such as Large Language Models. We have summarized such optimizations in this section. This section focuses on how to set up the Jetson environment for running LLMs and how to decide on the best model for yourself.
-This reading assumes that you have generic knowledge of Large Language Models, including tokenization, embeddings, and the training process of LLMs. For people who need a refresher, the following reading is recommended.
+Edge systems such as laptops and Nvidia Jetsons have limited resources compared to full-fledged servers with a large power budget. As such, optimizations are necessary to run demanding AI models such as Large Language Models. We have summarized such optimizations in this section. This section focuses on how to set up the edge system for running LLMs and how to decide on the best model for yourself.
+
+This reading assumes that you have generic knowledge of Large Language Models, including tokenization, embeddings, and the training process of LLMs. 
 
 **LLaMa.cpp Open Source C++ Library**
 
 LlaMa.cpp is an open-source C++ library for running large language models. Being written in plain C++ with no dependencies, it makes it extremely fast and lightweight. A noteworthy feature is that it can offload parts or all parts of models onto the GPU, making it possible to cater to a wide range of devices, including Nvidia Jetson.
-To support this capability on Jetson, llama.cpp was compiled from source with support for CUDA, which also enables other support libraries such as the cuBLAS (Basic Linear Algebra Subprograms) library. It is also important for you to set the microarchitecture in CMake to compile the native code that Jetson Xavier NX can use. (Note: Nvidia Xavier series CUDA microarchitecture is 72). All of this can be done with the following flags while running CMake.
+To support this capability, llama.cpp was compiled from source with support for CUDA, which also enables other support libraries such as the cuBLAS (Basic Linear Algebra Subprograms) library. All of this can be done with the following flags while running CMake.
 
 ```bash
 git clone https://github.com/ggerganov/llama.cpp.git
 cd llama.cpp
-cmake -B build -DGGML_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES=72
+cmake -B build -DGGML_CUDA=ON 
 
 ```
 
-Llama uses the GGUF format or Georgi Gerganov's Universal Format (creator of llama.cpp) to distribute and run large language models. This is in contrast with PyTorch, which uses multiple files, such as config.json, tokenizer.model, model. saftensors etc. The GGUF file includes everything you need to run the model, including the quantized model weights, all model metadata, the tokenizer that converts text into tokens, and the prompt template that tells whether it is a chat model or an instruct model.
+Llama uses the GGUF format or Georgi Gerganov's Universal Format (creator of llama.cpp) to distribute and run large language models. This is in contrast with PyTorch, which uses multiple files, such as config.json, tokenizer.model, model.saftensors etc. The GGUF file includes everything you need to run the model, including the quantized model weights, all model metadata, the tokenizer that converts text into tokens, and the prompt template that tells whether it is a chat model or an instruct model.
 A few noteworthy features for LlaMa.cpp include Broad Model Support and Collection of Useful Tools. Despite its name, it doesn't just run Llama models. It supports a wide variety of open-source architectures, including Mistral, Phi-2, Qwen, and many others. Also, it comes with several ready-to-use command-line tools, including the following: main: A tool for running text generation. server: A tool that runs the model as an OpenAI-compatible web server, so you can interact with it through an API. quantize: A tool to convert and quantize models into the GGUF format.
 
 **LLaMa.cpp Python Binding Code Explanation**
@@ -692,16 +699,18 @@ while True:
 
 **Quantization Techniques for LLMs**
 
-Even with optimizations made on LlaMa.cpp, we still need to optimize the model itself to run on Jetson. One of the most important techniques is quantization. Quantization is the process of reducing the precision of a model's weights (its parameters). Most models are trained using 32-bit floating-point (FP32) or 16-bit floating-point (FP16) numbers. These numbers are very precise (e.g., 3.14159265...). Quantization converts these high-precision numbers into lower-precision numbers, like 8-bit integers (INT8) or 4-bit integers (INT4). These numbers are less precise (e.g., they might only store 3.14).
+Even with optimizations made on LlaMa.cpp, we still need to optimize the model itself to run on edge devices. One of the most important techniques is quantization. Quantization is the process of reducing the precision of a model's weights (its parameters). Most models are trained using 32-bit floating-point (FP32) or 16-bit floating-point (FP16) numbers. These numbers are very precise (e.g., 3.14159265...). Quantization converts these high-precision numbers into lower-precision numbers, like 8-bit integers (INT8) or 4-bit integers (INT4). These numbers are less precise (e.g., they might only store 3.14).
 
-Quantization has two massive benefits for devices like the Jetson. The first is Smaller Model Size. The model file becomes significantly smaller. A 7B model that is ~14GB at FP16 becomes only ~3.8GB at 4-bit. This is the difference between fitting in RAM or not. The second is Faster Inference. CPUs and GPUs can perform math on integers much faster than on floating-point numbers. This results in a significant speed-up in how fast the model can generate tokens. The trade-off is a very small loss in accuracy, but modern quantization methods make this loss acceptable.
-Smaller model size is crucial for running on Jetson Xavier NX, which only has 8GB of RAM to be shared between CPU and GPU. The model's context (the "memory" of the conversation) needs to be where the CPU and GPU can access. Otherwise, if you run out of RAM, you will crash the system. We can mitigate this by increasing the swap space on your Jetson to 8GB, as was already done by the IA. However, using the SD card ‘virtual RAM is very slow. This means that RAM size can be a bottleneck for running LLMs, providing a reason why someone might want Jetsons with higher RAM capacity despite the higher price tag.
+Quantization has two massive benefits for devices like edge devices. The first is Smaller Model Size. The model file becomes significantly smaller. A 7B model that is ~14GB at FP16 becomes only ~3.8GB at 4-bit. This is the difference between fitting in RAM or not. The second is Faster Inference. CPUs and GPUs can perform math on integers much faster than on floating-point numbers. This results in a significant speed-up in how fast the model can generate tokens. The trade-off is a very small loss in accuracy, but modern quantization methods make this loss acceptable.
+
+Smaller model size is crucial for running on edge devices, which only has 8GB of VRAM in our case. The model's context (the "memory" of the conversation) needs to be where the CPU and GPU can access it. Otherwise, if you run out of VRAM, you will crash the LLM.
 
 Let us now talk about the quantization ecosystem relevant to users when they want to download a model from Hugging Face. The following shows a GGUf file from HuggingFace that was used as a demo in this assignment.
 
 `llama-2-7b-32k-insturct.Q4_K_M.gguf`
 
 From the name of the model, aside from the fact that this is an LlaMa2 model with 7b parameters, we can actually see the type of quantization technique used before distribution on Hugging Face.
+
 "K-M" refers to a specific, advanced quantization method used in llama.cpp. The "K" stands for K-means (a clustering algorithm). Older 4-bit quantization methods (like Q4_0) were simple and fast but lost more accuracy. The "K-quants" are smarter. Instead of just rounding numbers, the K-means algorithm is used to group the model's weights into clusters. It then stores the centroids (the center point) of those clusters. This method is much better at preserving the important information in the weights, leading to a much lower accuracy loss.
 
 Therefore, when you see a file named `llama-2-7b-chat.Q4_K_M.gguf`, you can note the following from the file name: Q4: It's a 4-bit quantization. _K: It uses the advanced K-means method. _M: This stands for "Medium." It uses a 256-block size, which offers the best balance between quality and file size. You may also see _S (Small), which is slightly lower quality but smaller.
@@ -709,7 +718,7 @@ All in all, Q4_K_M is generally the recommended 4-bit quantization for most user
 
 **Context Window and Finetuning Methods for LLMs**
 
-So far, the discussion on llama.cpp and quantization has been concerned with how to run aspects of LLMs. This information might be enough for you to start running LLMs on Jetson without crashing. However, you should now shift your focus to finding a suitable model for you to achieve your goals of running LLMs on Jetson.
+So far, the discussion on llama.cpp and quantization has been concerned with how to run aspects of LLMs. This information might be enough for you to start running LLMs on edge devices without crashing. However, you should now shift your focus to finding a suitable model for you to achieve your goals of running LLMs on the edge.
 You might have noticed that sometimes there is a smaller number like 32k listed after a big number, such as 7b, in some LLM models on Hugging Face. For file name `llama-2-7b-32k-insturct.Q4_K_M.gguf`, 32k refers to the token count of the context window. This is the model's memory, equivalent to about 24000 English words with about 3-4 English characters per token. This means the model can read, process, and remember a prompt and its ongoing conversation up to the length of 32k tokens. This is a very large context window. The original Llama 2 model was only 4,000 tokens (4k). A 32k model is specifically designed for tasks involving long documents. You can paste in an entire chapter, a long research paper, or a big block of code, and ask complicated questions with many logical steps, which a 4k model could not handle.
 
 Another factor that influences decisions regarding LLM is the fine-tuning process. Base LLMs are trained to predict words within a context. In the case of LlaMa2, it was trained on a massive portion of the internet. It's a "next-word predictor." If you give it the prompt "What is the capital of France?", it might just complete it with "...and what is its population?" because that's a statistically likely sentence. As such, base LLMs are not very useful for scientific and engineering applications such as robotics.
