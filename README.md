@@ -94,11 +94,50 @@ The following instructions are from our own and not from online sources. Please 
 top
 ```
 
-**GPU Usage**
+```
+top - 20:23:44 up  8:52,  0 users,  load average: 1.73, 1.83, 1.79
+Tasks:   5 total,   1 running,   4 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  8.3 us,  0.3 sy,  0.0 ni, 91.1 id,  0.0 wa,  0.0 hi,  0.2 si,  0.0 st
+MiB Mem :  15289.4 total,    503.6 free,   5193.6 used,   9592.2 buff/cache
+MiB Swap:   4096.0 total,   4095.6 free,      0.4 used.  10573.3 avail Mem 
+
+    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                                                                                                          
+      1 root      20   0    8096   4448   3648 S   0.0   0.0   0:00.04 bash                                                                                                             
+     98 root      20   0    8224   4496   3676 S   0.0   0.0   0:00.01 bash                                                                                                             
+    131 root      20   0    8224   4548   3728 S   0.0   0.0   0:00.04 bash                                                                                                             
+    953 root      20   0   33.8g 619396 285848 S   0.0   4.0   0:02.88 python3                                                                                                          
+    981 root      20   0   10844   4196   3468 R   0.0   0.0   0:00.00 top
+```
+
+**GPU Usage (GPU memory or VRAM, GPU utilization)**
 ```
 nvidia-smi
 ```
 
+```
+root@minhyuk-Nitro-ANV16-42:~/my_code/Robotics_Assignment_5# nvidia-smi
+Tue Mar 31 20:24:26 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 580.126.09             Driver Version: 580.126.09     CUDA Version: 13.0     |
++-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA GeForce RTX 5050 ...    Off |   00000000:01:00.0 Off |                  N/A |
+| N/A   42C    P8              3W /   60W |    4893MiB /   8151MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|    0   N/A  N/A             953      C   python3                                4870MiB |
++-----------------------------------------------------------------------------------------+
+
+```
 
 **[Remote-PC]** Inside a new Docker shell, go to the folder in a new terminal window.
 
