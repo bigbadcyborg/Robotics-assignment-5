@@ -123,7 +123,7 @@ whisper_model = WhisperModel("small", device = "cuda", compute_type = "float16")
 
 The available models are listed in order from smallest to largest: tiny, base, small, medium, and large v1/v2/v3. Note that all models, except large, have English-only versions.
 
-Note that Remote-PC has 8GB of dedicated VRAM.
+Note that Remote-PC has 8GB of dedicated VRAM. It is your responsibility to keep VRAM usage in check so that your program do not crash from out of memory errors. We have given reasonable defaults in the demo programs we provided.
 
 | Model | Param count | Vram Usage |
 | --- | --- | --- |
@@ -181,6 +181,18 @@ Here is a table of LLaMa LLM features.
 | **VRAM Required** | ~4.5 GB + **high memory for KV cache** | ~4.5 GB + low memory for KV cache |
 
 
+**[Remote-PC]** Inside a new Docker shell, you can monitor the system resources on the Remote-PC with the following commands running in the background.
+
+**CPU and RAM Usage**
+```
+top
+```
+
+**GPU Usage**
+```
+nvidia-smi
+```
+
 **[Remote-PC]** Go to the folder with the demo code.
 
 ```bash
@@ -188,7 +200,7 @@ cd ~/my_code/Robotics_Assignment_5/Assignment_5_demo
 
 ```
 
-**[Remote-PC]** Try running llama-2-7b-32k-insturct via Q4 quantization. 
+**[Remote-PC]** Try running llama-2-7b-32k-insturct via Q4 quantization on a new Docker shell. 
 
 ```python
 MODEL_PATH = os.path.expanduser(“~/my_code/Robotics_Assignment_5/Assignment_5_demo/llama-2-7b-32k-insturct.Q4_K_M.gguf”)
@@ -200,7 +212,7 @@ python3 test_llama_text.py
 
 ```
 
-**[Remote-PC]** Modify the demo code so that you can chat with a llama via text, but with llama2-7b-chat. 
+**[Remote-PC]** Close the previous program with ctrl + c on the terminal. Modify the demo code so that you can chat with a llama via text, but with llama2-7b-chat and re-execute the demo.
 
 ```python
 MODEL_PATH = os.path.expanduser(“~/my_code/Robotics_Assignment_5/Assignment_5_demo/llama-2-7b-chat.Q4_K_M.gguf”)
@@ -211,7 +223,7 @@ MODEL_PATH = os.path.expanduser(“~/my_code/Robotics_Assignment_5/Assignment_5_
 python3 test_llama_text.py
 
 ```
-**[Remote-PC]** You can add the ability to have a system prompt or a pre-prompt by modifying the text inference loop. 
+**[Remote-PC]** You can add the ability to have a system prompt or a pre-prompt by modifying the text inference loop. Close the previous program with ctrl+c and try running this demo code on the docker shell.
 
 ```bash
 python3 test_llama_text_system.py
@@ -238,7 +250,7 @@ python3 test_llama_text_system.py
 * Prompt 1: I'm building a service robot. Can you help me write a Python function for human interaction?
 
 
-**[Remote-PC]** Run the demo code that allows you to speak to a LlaMa via voice using whisper and espeak. This code will use llama-2-7b-chat via Q4 quantization. 
+**[Remote-PC]** Try running the demo code that allows you to speak to a LlaMa via voice using whisper and espeak. Close the previous program with ctrl+c and try running this demo code on the docker shell.
 
 ```bash
 python3 test_llama_whisper_and_speach.py
@@ -255,7 +267,10 @@ For part 4, we will provide you with the complete ROS2 script on Jetson interfac
 
 Please take a look at the provided code for ROS2 Servers and clients, and choose what models you want to use for Whisper and LLaMa by modifying the provided code. 
 
-The following is an instruction to execute the provided code.
+The following is an instruction to execute the provided code. 
+
+**[Remote-PC]** Make sure that no other program is running to ensure that there is enough system resources.
+
 
 **[Remote-PC]** Inside the Docker shell, execute the following.
 
@@ -271,6 +286,9 @@ cd ~/my_code/Robotics_Assignment_5/
 python3 sample_code_client.py
 ```
 
+**[Remote-PC]** While the codes run as is, you are still expected to modify the parameters within the code if necessary to complete the demo requirements.
+
+
 ---
 
 ### Video Demo Requirements (4-5 Minute Demonstration)
@@ -281,10 +299,11 @@ Your submission must include two items: the video file and a single .zip file co
 
 #### Part A: LLM Testing
 
-The goal of this part is to demonstrate that you have tested the two provided LLMs.
+The goal of this part is to demonstrate that you have tested the two provided LLMs, chat and instruct finetuned LLaMa2.
 
 * **LLM Insights and Logical Test:**
 * **Model Comparison:** In your narration, briefly explain the conceptual difference between chat and instruct LLM models. Then, show a quick example of how their responses differ to the same input, proving you have tested both.
+* **System Prompt Comparison:** In your narration, briefly explain effects of having a system prompt and not having a system prompt.
 * **Logical Puzzle:** Discuss the result of using a text-only demo script to send the specific "thirsty" bottle problem to your LLaMa action server using appropriate prompt engineering to formulate the problem in natural language. Choose an appropriate model for this task. You may assume or define all other necessary parameters about the environment and robot for prompt engineering to ask LLM to solve this puzzle.
 * **Thirsty bottle problem:** The user is thirsty. On a table in front of you are four objects: a hat, a computer mouse, a toaster, and a water bottle full of water. How can Turtlebot3 with a manipulator arm help the user?
 * **Prompt Engineering:** After the puzzle, verbally explain the specific LLaMa model you used and the prompt engineering techniques you applied to ensure the model solved the puzzle correctly and returned answers that can be parsed easily into concrete action sequences that can be taken by the robot.
@@ -297,9 +316,9 @@ The goal of this part is to explain the ROS2 architecture we provided. With your
 
 * **Remote PC Nodes:**
 
-* Explain the Whisper server that captures audio and publishes the transcribed text. Mention the model you chose for this task with brief reasoning behind your decision.
-* Explain the LLaMa server, showing how it receives a prompt, processes it, and returns the generated text as a result. Mention the model you chose for this task with brief reasoning behind your decision.
-* Explain the Espeak server, showing how it receives text as a goal and uses the TTS engine to produce audio.
+* Explain the Whisper publisher server that captures audio and publishes the transcribed text. Mention the model you chose for this task with brief reasoning behind your decision.
+* Explain the LLaMa publisher server, showing how it receives a prompt, processes it, and returns the generated text as a result. Mention the model you chose for this task with brief reasoning behind your decision.
+* Explain the Espeak publisher server, showing how it receives text as a request and uses the TTS engine to produce audio.
 
 
 #### Part C: Live System Demonstration
@@ -308,16 +327,15 @@ In this part, you will run our full system to demonstrate each AI model and the 
 
 * **Whisper (Speech-to-Text):**
 * Speak a clear English sentence into the microphone connected to the Jetson (e.g., "Hello, what can you tell me about robotics?").
-* Show the terminal on your Remote PC where your subscriber node prints the correctly transcribed text received from the Jetson's Whisper node.
+* Show the terminal on your Remote-PC where your publisher and subscriber nodes handling your request.
 
 * **LLaMa (Language Model Response):**
-* Take the transcribed text from the previous step and use your Remote PC client to send it as a goal to the LLaMa action server on the Jetson.
-* Show the LLaMa model processing the request on the Jetson's screen.
+
+* Show the LLaMa model processing the request on the screen.
 * Show the text response from LLaMa being received and displayed on the Remote PC.
 
 * **espeak (Text-to-Speech):**
-* Take the text response generated by LLaMa and use your Remote PC client to send it as a goal to the Espeak action server.
-* Ensure the video captures the audio of the Jetson speaking the full response clearly.
+* Take the text response generated by LLaMa and use your Remote PC client to send it as a goal to the Espeak publisher server.
 
 
 
