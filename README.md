@@ -305,14 +305,16 @@ Here is a summary of the prompting techniques useful for these tasks. For a more
 
 **General Question and Answering Tasks**
 
-You should modify prompts with appropriate techniques if you were to try out different prompting methods. We recommend using these general questions to try out zero-shot, few-shot, and chain-of-thought prompting techniques.
+You should modify prompts with appropriate techniques if you were to try out different prompting methods. We give you these general questions to try out the effects of zero-shot, few-shot, and chain-of-thought prompting techniques.
 
 **Follow-up Question**
 ```
 Can you explain the difference between forward and inverse kinematics for a robotic arm?"
+```
 
 (After it answers...)
 
+```
 "Which one is generally considered more computationally difficult to solve and why?"
 ```
 **Open-Ended Question**
@@ -325,7 +327,7 @@ Provide the main components of a ROS 2 system as a bulleted list. Do not add any
 ```
 **Robotic Action Planning**
 
-This is an example of a good system prompt for these tasks:
+This is an example of a good system prompt for robot action planning:
 
 ```
 You are the reasoning engine for a mobile manipulator robot. Your goal is to break down user commands into a strict JSON array of physical actions. The only available actions you can choose from are: ["move_to_left", "move_to_right", "move_to_front", "move_to_back", "grab_object", "scan_environment", "release_object"]. Do not output any conversational text, greetings, or explanations. Only output the JSON array.
@@ -334,7 +336,7 @@ You are the reasoning engine for a mobile manipulator robot. Your goal is to bre
 This is a prompt asking for robot actions. 
 
 ```
-Please grab the bottle on the right and drop it in front of me, who is behind you at the start.'
+Please grab the bottle on the right and drop it in front of me, who is behind you at the start.
 ```
 
 You should modify prompts with appropriate techniques if you were to try out different prompting methods.
@@ -349,7 +351,7 @@ Output: [{"action": "scan_environment", "target": "teddy bear"}, {"action": "mov
 Command: 'Move the bottle from the front to the back.'
 Output: [{"action": "move_to_front", "target": "bottle"}, {"action": "grab_object", "target": "bottle"}, {"action": "move_to_back", "target": "bottle"}, {"action": "release_object", "target": "bottle"}]
 
-Command: 'Please grab the bottle on the right and drop it in front of me, who is behind you at the start.'"
+Command: 'Please grab the bottle on the right and drop it in front of me, who is behind you at the start.'
 ```
 
 **[Remote-PC]** Try running the demo code that allows you to have a voice conversation with a LlaMa LLM via voice using whisper and espeak. Close the previous program with ctrl+c and try running this demo code on the Docker shell.
