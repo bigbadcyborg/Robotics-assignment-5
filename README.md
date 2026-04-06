@@ -278,6 +278,15 @@ python3 test_llama_text_system.py
 
 ```
 
+| Feature | `llm(...)` | `llm.create_chat_completion(...)` |
+| :--- | :--- | :--- |
+| **Python Method** | Calls the class `__call__` dunder method (acts as an alias for `create_completion`). | Calls a specific class method designed for chat formatting. |
+| **Input Parameter** | `prompt` | `messages` |
+| **Input Data Type** | String (`str`) | List of Dictionaries (`list[dict]`) |
+| **Yielded Object** | Dictionary containing a `text` key. | Dictionary containing a `delta` object. |
+| **Best Use Case** | Raw text prediction, code completion, or legacy base models. | Instruction-tuned models and multi-turn conversations. |
+
+
 **[Remote-PC]** Try following tasks and try different prompting techniques on two different models, chat and instruct. 
 
 You are expected to use system prompts as well as prompting techniques during your trials.
