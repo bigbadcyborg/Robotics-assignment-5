@@ -766,6 +766,60 @@ while True:
         print()
 
 ```
+### The Stateful Chat Loop (`create_chat_completion`)
+The following shows a stateful chat loop. Unlike the basic text inference loop which treats every input as an isolated event, this loop maintains conversation history by passing a structured list of messages.
+
+**Core Differences in the Loop:**
+* **`messages` instead of `prompt`:** You no longer pass a single raw string. Instead, you pass a list of dictionaries (e.g., `[{"role": "system", "content": "..."}, {"role": "user", "content": "..."}]`). The `chat_format` specified when loading the model automatically handles the internal prompting syntax (like `[INST]` tags for Llama 2).
+* **Appending History:** To maintain context, you must append both the user's new input and the assistant's final generated reply to the `messages` list during every loop iteration.
+* **No `echo` parameter:** Because inputs and outputs are strictly separated by roles in the `messages` list, the `echo` parameter is no longer used or needed.
+
+**Handling Output (The "Delta"):**
+Because this method follows the standard chat API structure, the yielded data chunk is formatted differently when `stream=True` is enabled.
+* **`delta = chunk['choices'][0].get('delta', {})`:** Instead of providing the absolute text directly, the chunk provides a "delta," representing the change in the stream's state. 
+* **`token = delta.get('content', '')`:** This safely extracts the newly generated text token from the delta. If the delta is empty (like at the very end of the stream), it returns an empty string.
+
+```python
+    system_message = {
+        "role": "system",
+        "content": "You are a helpful assistant."
+    }
+    messages = [system_message]
+
+    while True:
+        user_input = input("\nYou: ")
+        if user_input.strip().lower() in ("exit", "quit"):
+            break
+
+        # 1. Append the user's new prompt to the conversation history
+        messages.append({"role": "user", "content": user_input})
+
+        print("Assistant: ", end="", flush=True)
+        full_reply = ""
+        
+        # 2. Pass the entire message history, not just the prompt
+        for chunk in llm.create_chat_completion(
+            messages=messages,
+            max_tokens=128,
+            stop=["\nYou:"],
+            temperature=0.7,
+            top_p=0.95,
+            stream=True
+        ):
+            # 3. Extract tokens using the 'delta' object
+            delta = chunk['choices'][0].get('delta', {})
+            token = delta.get('content', '')
+            
+            if token:
+                full_reply += token
+                print(token, end="", flush=True)
+                
+        # 4. Append the assistant's final reply to the history to maintain memory
+        if full_reply:
+            messages.append({"role": "assistant", "content": full_reply})
+            
+        print()
+```
 
 **Quantization Techniques for LLMs**
 
