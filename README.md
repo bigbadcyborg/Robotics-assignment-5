@@ -226,7 +226,7 @@ Here is a table of LLaMa LLM features. For more details of each model, please co
 | **VRAM Required** | ~4.5 GB + **high memory for KV cache** | ~4.5 GB + low memory for KV cache |
 
 
-**[Remote-PC]** Inside a new Docker shell, you can monitor the system resources on the Remote-PC with the following commands running in the background.
+**[Remote-PC]** Inside a new Docker shell, you can monitor the system resources on the Remote-PC with the following commands running in the background. While running the Python scripts, watch nvidia-smi and top. Note the difference in VRAM usage and RAM before the script runs, during the model loading phase, and during inference.
 
 **CPU and RAM Usage**
 ```
@@ -279,7 +279,13 @@ python3 test_llama_text_system.py
 
 **[Remote-PC]** Try following tasks and try different prompting techniques on two different models, chat and instruct. 
 
-You are expected to use system prompts (Description of roles and duties e.g., you are a math teacher) as well as prompting techniques during your trials.
+You are expected to use system prompts as well as prompting techniques during your trials.
+
+This is an example of a good system prompt for general questions and answering tasks:
+
+```
+You are a robotics teacher. Your goal is to teach students about robotics concepts. Do not output any conversational text or greetings. 
+```
 
 Here is a summary of the prompting techniques useful for these tasks. For a more detailed description, please consult the appendix. 
 
@@ -287,21 +293,54 @@ Here is a summary of the prompting techniques useful for these tasks. For a more
 * **Few-Shot Prompting:** Providing a few examples (input-output pairs) within the prompt to guide the AI. This demonstrates the specific pattern, style, or strict format you want the model to follow before giving it the actual task. 
 * **Chain-of-Thought (CoT) Prompting:** Instructing the AI to break down its reasoning step-by-step (often by simply adding a phrase like *"Let's think step by step"*). This significantly improves the model's accuracy on complex math, logic, and reasoning tasks by forcing it to map out its logic before arriving at the final answer.
 
-**Tasks**
+**General Question and Answering Tasks**
+
+You should modify prompts 1 and 2 with appropriate techniques if you were to try out different prompting methods. We recommend using these general questions to try out zero-shot, few-shot and chain-of-thought prompting techniques.
 
 **Follow-up Question**
+```
 * Prompt 1: "Can you explain the difference between forward and inverse kinematics for a robotic arm?"
 * (After it answers...)
 * Prompt 2: "Which one is generally considered more computationally difficult to solve and why?"
-
+```
 **Open-Ended Question**
+```
 * Prompt 1: How does a SLAM work in a robot?
-
+```
 **Strict Formatting**
+```
 * Prompt 1: Provide the main components of a ROS 2 system as a bulleted list. Do not add any introductory or concluding sentences. List exactly four components.
+```
+**Robotic Action Planning**
 
+This is an example of a good system prompt for these tasks:
 
-**[Remote-PC]** Try running the demo code that allows you to have a voice conversation with a LlaMa LLM via voice using whisper and espeak. Close the previous program with ctrl+c and try running this demo code on the Docker shell. This is what is expected of you in Part 4 of the assignment.
+```
+You are the reasoning engine for a mobile manipulator robot. Your goal is to break down user commands into a strict JSON array of physical actions. The only available actions you can choose from are: ["move_to_left", "move_to_right", "move_to_front", "move_to_back", "grab_object", "scan_environment", "release_object"]. Do not output any conversational text, greetings, or explanations. Only output the JSON array.
+```
+
+This is a prompt asking for robot actions. 
+
+```
+Please grab the bottle on the right and drop it in front of me, who is behind you at the start.'
+``
+
+You should modify prompts with appropriate techniques if you were to try out different prompting methods.
+
+Enter the following as your user prompt. Notice how we provide two examples of what we want before giving the robot its actual task, restricting the target objects to either a "bottle" or a "teddy bear."
+
+We provide this few-shot prompting example.
+```
+Command: 'Find the teddy bear on the left.'
+Output: [{"action": "scan_environment", "target": "teddy bear"}, {"action": "move_to_left", "target": "teddy bear"}, {"action": "grab_object", "target": "teddy bear"}]
+
+Command: 'Move the bottle from the front to the back.'
+Output: [{"action": "move_to_front", "target": "bottle"}, {"action": "grab_object", "target": "bottle"}, {"action": "move_to_back", "target": "bottle"}, {"action": "release_object", "target": "bottle"}]
+
+Command: 'Please grab the bottle on the right and drop it in front of me, who is behind you at the start.'"
+```
+
+**[Remote-PC]** Try running the demo code that allows you to have a voice conversation with a LlaMa LLM via voice using whisper and espeak. Close the previous program with ctrl+c and try running this demo code on the Docker shell.
 
 ```bash
 python3 test_llama_whisper_and_speach.py
@@ -356,10 +395,12 @@ Your submission must include two items: the video file and a single .zip file co
 The goal of this part is to demonstrate that you have tested the two provided LLMs, chat and instruct finetuned LLaMa2.
 
 **LLM Insights and Logical Test:**
-* **Model Comparison:** In your narration, briefly explain the conceptual difference between chat and instruct LLM models. Then, show a quick example of how their responses differ to the same input, proving you have tested both.
+* **Model Comparison:** In your narration, briefly explain the conceptual difference between chat and instruct LLM models. 
 * **System Prompt Comparison:** In your narration, briefly explain the effects of having a system prompt and not having a system prompt.
-* **Task Execution:** Discuss the result of various tests you did with prompts in Part 3 of the assignment.
-
+* **Prompting Technique Comparison:** In your narration, briefly explain your experience with  various prompting techniques.
+**Task Execution:** Discuss the result of various tests you did with prompts in Part 3 of the assignment.
+    * Did the LLM successfully output what you specified? State with a few examples.
+    * Compare how the llama-2-7b-chat model handles output strict constraint versus the llama-2-7b-32k-instruct model. Which one was better at following your request? State with a few examples.
 
 #### Part B: Code Walkthrough
 
