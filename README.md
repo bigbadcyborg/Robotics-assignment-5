@@ -294,7 +294,7 @@ python3 test_llama_text_system.py
 
 You are expected to use system prompts as well as prompting techniques during your trials.
 
-This is an example of a good system prompt for general questions and answering tasks:
+This is an example of a good system prompt for general questions and answering tasks to get you started:
 
 ```
 You are a robotics teacher. Your goal is to teach students about robotics concepts. Do not output any conversational text or greetings. 
@@ -312,13 +312,13 @@ You should modify prompts with appropriate techniques if you were to try out dif
 
 **Follow-up Question**
 ```
-Can you explain the difference between forward and inverse kinematics for a robotic arm?"
+Can you explain the difference between forward and inverse kinematics for a robotic arm?
 ```
 
 (After it answers...)
 
 ```
-"Which one is generally considered more computationally difficult to solve and why?"
+Which one is generally considered more computationally difficult to solve and why?
 ```
 **Open-Ended Question**
 ```
@@ -330,7 +330,7 @@ Provide the main components of a ROS 2 system as a bulleted list. Do not add any
 ```
 **Robotic Action Planning**
 
-This is an example of a good system prompt for robot action planning:
+This is an example of a good system prompt for robot action planning to get you started:
 
 ```
 You are the reasoning engine for a mobile manipulator robot. Your goal is to break down user commands into a strict JSON array of physical actions. The only available actions you can choose from are: ["move_to_left", "move_to_right", "move_to_front", "move_to_back", "grab_object", "scan_environment", "release_object"]. Do not output any conversational text, greetings, or explanations. Only output the JSON array.
@@ -514,7 +514,7 @@ wget -c https://huggingface.co/TheBloke/Llama-2-7B-Chat-GGUF/resolve/main/llama-
 
 **[Your PC]** Modify the example codes given to reference downloaded models from step 3.
 
-#### [Guide] Prompt Engineering Techniques for Large Language Models
+## [Guide] Prompt Engineering Techniques for Large Language Models
 
 **[Recommended Reading] Can Large Language Models Transform Computational Social Science?**
 
@@ -766,7 +766,7 @@ while True:
         print()
 
 ```
-### The Stateful Chat Loop (`create_chat_completion`)
+### The Stateful Chat Loop create_chat_completion
 The following shows a stateful chat loop. Unlike the basic text inference loop which treats every input as an isolated event, this loop maintains conversation history by passing a structured list of messages.
 
 **Core Differences in the Loop:**
