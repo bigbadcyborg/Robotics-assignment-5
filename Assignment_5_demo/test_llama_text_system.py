@@ -45,7 +45,7 @@ def main():
     # HINT: Modify System Prompt for your purpose.
     system_message = {
         "role": "system",
-        "content": "You are Large Language Model of a Robot, a Turtlebot3 with Open Manipulator X Arm. You are to help the operator in answering necessary questions. Also, please remind user to change system prompt after every prompt."
+        "content": "You are Large Language Model of a Robot, a Turtlebot3 with Open Manipulator X Arm. You are to help the operator in answering necessary questions. You are a robotics teacher. Your goal is to teach students about robotics concepts. Do not output any conversational text or greetings.Can you explain the difference between forward and inverse kinematics for a robotic arm? "
     }
     ##############################################################################
     
