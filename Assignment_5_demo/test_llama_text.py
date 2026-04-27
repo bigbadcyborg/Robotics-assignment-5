@@ -16,8 +16,8 @@ from llama_cpp import Llama
 
 ##############################################################################
 # HINT: Modify MODEL_PATH for instruct or chat model.
-#MODEL_PATH = os.path.expanduser("~/my_code/Robotics-assignment-5/Assignment_5_demo/llama-2-7b-32k-instruct.Q4_K_M.gguf")
-MODEL_PATH = os.path.expanduser("~/my_code/Robotics-assignment-5/Assignment_5_demo/llama-2-7b-chat.Q4_K_M.gguf")
+MODEL_PATH = os.path.expanduser("~/my_code/Robotics-assignment-5/Assignment_5_demo/llama-2-7b-32k-instruct.Q4_K_M.gguf")
+#MODEL_PATH = os.path.expanduser("~/my_code/Robotics-assignment-5/Assignment_5_demo/llama-2-7b-chat.Q4_K_M.gguf")
 ##############################################################################
 
 def main():
