@@ -22,6 +22,3 @@ prompt2:
     llama_perf_context_print:        eval time =    3319.61 ms /   127 runs   (   26.14 ms per token,    38.26 tokens per second)
     llama_perf_context_print:       total time =    3885.86 ms /   279 tokens
     llama_perf_context_print:    graphs reused =        122
-
-
-prompt3:
